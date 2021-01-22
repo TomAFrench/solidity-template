@@ -3,7 +3,7 @@
 My favourite setup for writing Solidity smart contracts.
 
 - [Hardhat](https://github.com/nomiclabs/hardhat): compile and run the smart contracts on a local development network
-- [hardhat-deploy](hhttps://github.com/wighawag/hardhat-deploy): intelligently manage contract deployments and Etherscan verification
+- [hardhat-deploy](https://github.com/wighawag/hardhat-deploy): intelligently manage contract deployments and Etherscan verification
 - [TypeChain](https://github.com/ethereum-ts/TypeChain): generate TypeScript types for smart contracts
 - [Ethers](https://github.com/ethers-io/ethers.js/): renowned Ethereum library and wallet implementation
 - [Waffle](https://github.com/EthWorks/Waffle): tooling for writing comprehensive smart contract tests
