@@ -1,4 +1,4 @@
-import { Accounts, Signers } from "./";
+import { Accounts, Signers } from ".";
 import { Greeter } from "../typechain";
 
 declare module "mocha" {

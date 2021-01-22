@@ -1,28 +1,31 @@
-import { Signer } from "@ethersproject/abstract-signer";
-import { ethers, waffle } from "hardhat";
-
-import GreeterArtifact from "../artifacts/contracts/Greeter.sol/Greeter.json";
+/* eslint-disable func-names */
+import { deployments, ethers, getNamedAccounts } from "hardhat";
+import { Greeter } from "../typechain";
 
 import { Accounts, Signers } from "../types";
-import { Greeter } from "../typechain/Greeter";
 import { shouldBehaveLikeGreeter } from "./Greeter.behavior";
 
-const { deployContract } = waffle;
+const setup = deployments.createFixture(async () => {
+  await deployments.fixture();
+  const greeter = (await ethers.getContract("Greeter")) as Greeter;
+
+  return {
+    greeter,
+  };
+});
 
 describe("Unit tests", function () {
   before(async function () {
-    this.accounts = {} as Accounts;
-    this.signers = {} as Signers;
-
-    const signers: Signer[] = await ethers.getSigners();
-    this.signers.admin = signers[0];
-    this.accounts.admin = await signers[0].getAddress();
+    const accounts = await getNamedAccounts();
+    const signers = await ethers.getNamedSigners();
+    this.accounts = (accounts as unknown) as Accounts;
+    this.signers = (signers as unknown) as Signers;
   });
 
   describe("Greeter", function () {
     beforeEach(async function () {
-      const greeting: string = "Hello, world!";
-      this.greeter = (await deployContract(this.signers.admin, GreeterArtifact, [greeting])) as Greeter;
+      const { greeter } = await setup();
+      this.greeter = greeter;
     });
 
     shouldBehaveLikeGreeter();
