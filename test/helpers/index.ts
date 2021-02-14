@@ -1,3 +1,1 @@
-import chai from "./chai-setup";
-
-export { chai };
+export * from "./deploy";

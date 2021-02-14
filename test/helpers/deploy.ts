@@ -1,5 +1,6 @@
+import { MockContract } from "ethereum-waffle";
 import { Contract, Signer } from "ethers";
-import { deployments, ethers } from "hardhat";
+import { deployments, ethers, waffle } from "hardhat";
 
 export async function deploy(
     deploymentName: string,
@@ -23,4 +24,10 @@ export async function deploy(
     const instance = await ethers.getContractAt(deploymentName, deployment.address);
 
     return connect ? instance.connect(connect) : instance;
+}
+
+export async function deployMock(contractName: string, connect?: Signer): Promise<MockContract> {
+    const artifact = await deployments.getArtifact(contractName)
+    const deployer = await ethers.getNamedSigner("deployer");
+    return waffle.deployMockContract(connect ?? deployer, artifact.abi)
 }
