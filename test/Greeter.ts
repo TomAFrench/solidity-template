@@ -16,16 +16,17 @@ const setup = deployments.createFixture(async () => {
 
 describe("Unit tests", function () {
   describe("Greeter", function () {
+    let greeter: Greeter;
     beforeEach(async function () {
-      const { greeter } = await setup();
-      this.greeter = greeter;
+      const deployment = await setup();
+      greeter = deployment.greeter;
     });
 
     it("should return the new greeting once it's changed", async function () {
-      expect(await this.greeter.greet()).to.equal("Hello, world!");
+      expect(await greeter.greet()).to.equal("Hello, world!");
 
-      await this.greeter.setGreeting("Hola, mundo!");
-      expect(await this.greeter.greet()).to.equal("Hola, mundo!");
+      await greeter.setGreeting("Hola, mundo!");
+      expect(await greeter.greet()).to.equal("Hola, mundo!");
     });
   });
 });
