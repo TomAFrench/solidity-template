@@ -6,7 +6,7 @@ export async function deploy(
     { from, args, connect }: { from?: string; args: Array<unknown>; connect?: Signer },
     contractName: string = deploymentName,
 ): Promise<Contract> {
-    // Unless overriden, deploy from named address "deployer"
+    // Unless overridden, deploy from named address "deployer"
     if (from === undefined) {
         const deployer = await ethers.getNamedSigner("deployer");
         // eslint-disable-next-line no-param-reassign
