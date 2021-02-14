@@ -29,7 +29,8 @@ function createTestnetConfig(network: keyof typeof ChainId): NetworkUserConfig {
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   namedAccounts: {
-    admin: 0,
+    deployer: 0, // Do not use this account for testing
+    admin: 1,
   },
   networks: {
     hardhat: {
