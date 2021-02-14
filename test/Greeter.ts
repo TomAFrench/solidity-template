@@ -5,9 +5,8 @@ import { Greeter } from "../typechain";
 import { deploy } from "./helpers/deploy";
 
 const setup = deployments.createFixture(async () => {
-    await deployments.fixture();
     const admin = await ethers.getNamedSigner("admin");
-    const greeter = (await deploy("Greeter", { args: [], connect: admin })) as Greeter;
+    const greeter = (await deploy("Greeter", { args: ["Hello, world!"], connect: admin })) as Greeter;
 
     return {
         greeter,
