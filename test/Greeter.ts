@@ -1,9 +1,7 @@
 /* eslint-disable func-names */
-import { deployments, ethers, getNamedAccounts } from "hardhat";
+import { expect } from "chai";
+import { deployments, ethers } from "hardhat";
 import { Greeter } from "../typechain";
-
-import { Accounts, Signers } from "../types";
-import { shouldBehaveLikeGreeter } from "./Greeter.behavior";
 
 const setup = deployments.createFixture(async () => {
   await deployments.fixture();
@@ -15,19 +13,17 @@ const setup = deployments.createFixture(async () => {
 });
 
 describe("Unit tests", function () {
-  before(async function () {
-    const accounts = await getNamedAccounts();
-    const signers = await ethers.getNamedSigners();
-    this.accounts = (accounts as unknown) as Accounts;
-    this.signers = (signers as unknown) as Signers;
-  });
-
   describe("Greeter", function () {
     beforeEach(async function () {
       const { greeter } = await setup();
       this.greeter = greeter;
     });
 
-    shouldBehaveLikeGreeter();
+    it("should return the new greeting once it's changed", async function () {
+      expect(await this.greeter.greet()).to.equal("Hello, world!");
+
+      await this.greeter.setGreeting("Hola, mundo!");
+      expect(await this.greeter.greet()).to.equal("Hola, mundo!");
+    });
   });
 });
