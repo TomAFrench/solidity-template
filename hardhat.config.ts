@@ -33,6 +33,7 @@ const config: HardhatUserConfig = {
     networks: {
         hardhat: {
             chainId: ChainId.hardhat,
+            saveDeployments: false,
         },
         goerli: createTestnetConfig("goerli"),
         kovan: createTestnetConfig("kovan"),
