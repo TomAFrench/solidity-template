@@ -8,6 +8,7 @@ import "./tasks/clean";
 
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+import "hardhat-gas-reporter";
 import "hardhat-typechain";
 import "solidity-coverage";
 
@@ -85,6 +86,11 @@ const config: HardhatUserConfig = {
   typechain: {
     outDir: "typechain",
     target: "ethers-v5",
+  },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 100,
+    excludeContracts: ["Mock", "ERC20"],
   },
 };
 
