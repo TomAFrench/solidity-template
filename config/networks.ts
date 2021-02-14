@@ -8,4 +8,4 @@ export enum ChainId {
     mumbai = 80001,
     rinkeby = 4,
     ropsten = 3,
-  }
+}
