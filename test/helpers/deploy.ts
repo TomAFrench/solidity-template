@@ -27,7 +27,7 @@ export async function deploy(
 }
 
 export async function deployMock(contractName: string, connect?: Signer): Promise<MockContract> {
-    const artifact = await deployments.getArtifact(contractName)
+    const artifact = await deployments.getArtifact(contractName);
     const deployer = await ethers.getNamedSigner("deployer");
-    return waffle.deployMockContract(connect ?? deployer, artifact.abi)
+    return waffle.deployMockContract(connect ?? deployer, artifact.abi);
 }

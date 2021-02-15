@@ -8,7 +8,7 @@ import { deploy, deployMock } from "./helpers";
 const setup = deployments.createFixture(async () => {
     const admin = await ethers.getNamedSigner("admin");
     const greeter = (await deploy("Greeter", { args: ["Hello, world!"], connect: admin })) as Greeter;
-    const mockGreeter = await deployMock("Greeter", admin)
+    const mockGreeter = await deployMock("Greeter", admin);
 
     return {
         greeter,
@@ -20,11 +20,11 @@ describe("Unit tests", function () {
     describe("Greeter", function () {
         let greeter: Greeter;
         let mockGreeter: MockContract;
-        
+
         beforeEach(async function () {
             const deployment = await setup();
             greeter = deployment.greeter;
-            mockGreeter = deployment.mockGreeter
+            mockGreeter = deployment.mockGreeter;
         });
 
         it("should return the new greeting once it's changed", async function () {
@@ -35,9 +35,9 @@ describe("Unit tests", function () {
         });
 
         it("should return the expected greeting when mocked", async function () {
-          // Not really a proper test, just demonstrating how to mock contracts
-          await mockGreeter.mock.greet.returns("I'm a mock!");
-          expect(await mockGreeter.greet()).to.equal("I'm a mock!");
-      });
+            // Not really a proper test, just demonstrating how to mock contracts
+            await mockGreeter.mock.greet.returns("I'm a mock!");
+            expect(await mockGreeter.greet()).to.equal("I'm a mock!");
+        });
     });
 });
