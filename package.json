@@ -63,7 +63,7 @@
     "smart-contracts",
     "solidity"
   ],
-  "license": "WTFPL",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
