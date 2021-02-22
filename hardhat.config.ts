@@ -1,6 +1,5 @@
 import { HardhatUserConfig } from "hardhat/config";
-import { NetworkUserConfig } from "hardhat/types";
-import { ChainId, infuraApiKey, mnemonic } from "./config";
+import { ChainId, getRemoteNetworkConfig, mnemonic } from "./config";
 import "./tasks/accounts";
 import "./tasks/clean";
 
@@ -12,19 +11,12 @@ import "hardhat-gas-reporter";
 import "hardhat-typechain";
 import "solidity-coverage";
 
-function createTestnetConfig(network: keyof typeof ChainId): NetworkUserConfig {
-    const url = `https://${network}.infura.io/v3/${infuraApiKey}`;
-    return {
-        accounts: {
-            count: 10,
-            initialIndex: 0,
-            mnemonic,
-            path: "m/44'/60'/0'/0",
-        },
-        chainId: ChainId[network],
-        url,
-    };
-}
+const accounts = {
+    count: 10,
+    initialIndex: 0,
+    mnemonic,
+    path: "m/44'/60'/0'/0",
+};
 
 const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
@@ -37,10 +29,10 @@ const config: HardhatUserConfig = {
             chainId: ChainId.hardhat,
             saveDeployments: false,
         },
-        goerli: createTestnetConfig("goerli"),
-        kovan: createTestnetConfig("kovan"),
-        rinkeby: createTestnetConfig("rinkeby"),
-        ropsten: createTestnetConfig("ropsten"),
+        goerli: { accounts, ...getRemoteNetworkConfig("goerli") },
+        kovan: { accounts, ...getRemoteNetworkConfig("kovan") },
+        rinkeby: { accounts, ...getRemoteNetworkConfig("rinkeby") },
+        ropsten: { accounts, ...getRemoteNetworkConfig("ropsten") },
     },
     paths: {
         artifacts: "./artifacts",
