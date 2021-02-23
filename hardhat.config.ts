@@ -1,7 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import { ChainId, getRemoteNetworkConfig, mnemonic } from "./config";
-import "./tasks/accounts";
-import "./tasks/clean";
+import "./tasks";
 
 import "hardhat-deploy";
 // To make hardhat-waffle compatible with hardhat-deploy
