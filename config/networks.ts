@@ -10,6 +10,7 @@ export enum ChainId {
     mumbai = 80001,
     rinkeby = 4,
     ropsten = 3,
+    xdai = 100,
 }
 
 // Delegate requests for a network config to a provider specific function based on which networks they serve
@@ -40,9 +41,20 @@ const getMaticVigilConfig = (network: MaticVigilChains): { url: string; chainId:
     };
 };
 
-export type RemoteChains = InfuraChains | MaticVigilChains;
+// xDai
+const xDaiChains = ["xdai"] as const;
+type XDaiChains = typeof xDaiChains[number];
+const getXDaiConfig = (network: XDaiChains): { url: string; chainId: number } => {
+    return {
+        url: `https://rpc.xdaichain.com/`,
+        chainId: ChainId[network],
+    };
+};
+
+export type RemoteChains = InfuraChains | MaticVigilChains | XDaiChains;
 export const getRemoteNetworkConfig = (network: RemoteChains): { url: string; chainId: number } => {
     if (infuraChains.includes(network as InfuraChains)) return getInfuraConfig(network as InfuraChains);
     if (maticVigilChains.includes(network as MaticVigilChains)) return getMaticVigilConfig(network as MaticVigilChains);
+    if (xDaiChains.includes(network as XDaiChains)) return getXDaiConfig(network as XDaiChains);
     throw Error("Unknown network");
 };
