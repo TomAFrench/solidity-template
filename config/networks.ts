@@ -17,8 +17,8 @@ export enum ChainId {
 
 // Ethereum
 const infuraChains = ["goerli", "kovan", "mainnet", "rinkeby", "ropsten"] as const;
-type InfuraChains = typeof infuraChains[number];
-const getInfuraConfig = (network: InfuraChains): { url: string; chainId: number } => {
+type InfuraChain = typeof infuraChains[number];
+const getInfuraConfig = (network: InfuraChain): { url: string; chainId: number } => {
     if (!process.env.INFURA_API_KEY) {
         throw new Error("Please set your INFURA_API_KEY in a .env file");
     }
@@ -30,8 +30,8 @@ const getInfuraConfig = (network: InfuraChains): { url: string; chainId: number 
 
 // Matic
 const maticVigilChains = ["matic", "mumbai"] as const;
-type MaticVigilChains = typeof maticVigilChains[number];
-const getMaticVigilConfig = (network: MaticVigilChains): { url: string; chainId: number } => {
+type MaticVigilChain = typeof maticVigilChains[number];
+const getMaticVigilConfig = (network: MaticVigilChain): { url: string; chainId: number } => {
     if (!maticVigilApiKey) {
         throw new Error("Please set your MATICVIGIL_API_KEY in a .env file");
     }
@@ -43,18 +43,18 @@ const getMaticVigilConfig = (network: MaticVigilChains): { url: string; chainId:
 
 // xDai
 const xDaiChains = ["xdai"] as const;
-type XDaiChains = typeof xDaiChains[number];
-const getXDaiConfig = (network: XDaiChains): { url: string; chainId: number } => {
+type XDaiChain = typeof xDaiChains[number];
+const getXDaiConfig = (network: XDaiChain): { url: string; chainId: number } => {
     return {
         url: `https://rpc.xdaichain.com/`,
         chainId: ChainId[network],
     };
 };
 
-export type RemoteChains = InfuraChains | MaticVigilChains | XDaiChains;
-export const getRemoteNetworkConfig = (network: RemoteChains): { url: string; chainId: number } => {
-    if (infuraChains.includes(network as InfuraChains)) return getInfuraConfig(network as InfuraChains);
-    if (maticVigilChains.includes(network as MaticVigilChains)) return getMaticVigilConfig(network as MaticVigilChains);
-    if (xDaiChains.includes(network as XDaiChains)) return getXDaiConfig(network as XDaiChains);
+export type RemoteChain = InfuraChain | MaticVigilChain | XDaiChain;
+export const getRemoteNetworkConfig = (network: RemoteChain): { url: string; chainId: number } => {
+    if (infuraChains.includes(network as InfuraChain)) return getInfuraConfig(network as InfuraChain);
+    if (maticVigilChains.includes(network as MaticVigilChain)) return getMaticVigilConfig(network as MaticVigilChain);
+    if (xDaiChains.includes(network as XDaiChain)) return getXDaiConfig(network as XDaiChain);
     throw Error("Unknown network");
 };
