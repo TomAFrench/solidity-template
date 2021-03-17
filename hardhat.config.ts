@@ -7,7 +7,7 @@ import "hardhat-deploy";
 // we have aliased hardhat-ethers to hardhat-ethers-deploy in package.json
 import "@nomiclabs/hardhat-waffle";
 import "hardhat-gas-reporter";
-import "hardhat-typechain";
+import "@typechain/hardhat";
 import "solidity-coverage";
 
 const accounts = {
