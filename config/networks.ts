@@ -35,8 +35,10 @@ const getMaticVigilConfig = (network: MaticVigilChain): { url: string; chainId: 
     if (!maticVigilApiKey) {
         throw new Error("Please set your MATICVIGIL_API_KEY in a .env file");
     }
+
+    const networkString = network === "matic" ? "mainnet" : "mumbai";
     return {
-        url: `https://rpc-${network}.maticvigil.com/v1/${maticVigilApiKey}`,
+        url: `https://rpc-${networkString}.maticvigil.com/v1/${maticVigilApiKey}`,
         chainId: ChainId[network],
     };
 };
