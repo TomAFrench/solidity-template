@@ -1,4 +1,5 @@
 /* eslint-disable func-names */
+import { Interface } from "@ethersproject/abi";
 import { expect } from "chai";
 import { MockContract } from "ethereum-waffle";
 import { deployments, ethers } from "hardhat";
@@ -38,6 +39,13 @@ describe("Unit tests", function () {
             // Not really a proper test, just demonstrating how to mock contracts
             await mockGreeter.mock.greet.returns("I'm a mock!");
             expect(await mockGreeter.greet()).to.equal("I'm a mock!");
+        });
+
+        it("return a correctly formatted error when given a bad greeting", async function () {
+            const badGreeting = "I'm a bad greeting.";
+            const errorSignature = "function BadGreeting(string message)";
+            const expectedError = new Interface([errorSignature]).encodeFunctionData(errorSignature, [badGreeting]);
+            await expect(mockGreeter.setBadGreeting(badGreeting)).to.be.revertedWith(expectedError);
         });
     });
 });
