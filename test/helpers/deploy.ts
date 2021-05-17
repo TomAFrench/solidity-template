@@ -2,11 +2,11 @@ import { MockContract } from "ethereum-waffle";
 import { Contract, Signer } from "ethers";
 import { deployments, ethers, waffle } from "hardhat";
 
-export async function deploy(
+export async function deploy<T extends Contract>(
     deploymentName: string,
     { from, args, connect }: { from?: string; args: Array<unknown>; connect?: Signer },
     contractName: string = deploymentName,
-): Promise<Contract> {
+): Promise<T> {
     // Unless overridden, deploy from named address "deployer"
     if (from === undefined) {
         const deployer = await ethers.getNamedSigner("deployer");
@@ -23,7 +23,7 @@ export async function deploy(
 
     const instance = await ethers.getContractAt(deploymentName, deployment.address);
 
-    return connect ? instance.connect(connect) : instance;
+    return (connect ? instance.connect(connect) : instance) as T;
 }
 
 export async function deployMock(contractName: string, connect?: Signer): Promise<MockContract> {

@@ -7,7 +7,7 @@ import { deploy, deployMock } from "./helpers";
 
 const setup = deployments.createFixture(async () => {
     const admin = await ethers.getNamedSigner("admin");
-    const greeter = (await deploy("Greeter", { args: ["Hello, world!"], connect: admin })) as Greeter;
+    const greeter = await deploy<Greeter>("Greeter", { args: ["Hello, world!"], connect: admin });
     const mockGreeter = await deployMock("Greeter", admin);
 
     return {
